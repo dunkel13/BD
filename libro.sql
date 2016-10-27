@@ -1,5 +1,6 @@
 # tengo un error con el resultado del código, es el siguiente:
-# la tabla promoción me sale vacía, y lo que pasa es que después de que llame el procedimiento con 'call sp_promocion_libros ...' debería salir 1 registro en la tabla promoción.
+# la tabla promoción me sale vacía, y lo que pasa es que después de que llame el procedimiento con 'call sp_promocion_libros ...' 
+# debería salir 1 registro en la tabla promoción.
 drop database if exists OCT27;
 CREATE DATABASE OCT27;
 USE OCT27;
