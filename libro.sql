@@ -46,3 +46,6 @@ set @precio =(select lib_precio from libro where lib_id=id);
 	end $$
     
 delimiter ;
+
+call sp_promocion_libros(7);
+select * from promocion;
