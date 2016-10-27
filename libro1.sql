@@ -1,4 +1,4 @@
-# con precio como var local
+# Ejercicio en clase con 'precio' como variable local
 drop database if exists OCT27;
 CREATE DATABASE OCT27;
 USE OCT27;
