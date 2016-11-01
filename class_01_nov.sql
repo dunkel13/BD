@@ -33,3 +33,23 @@ end //
  delimiter ;
  set @a=contarTipoObra("pintura");
  select @a;
+
+drop table if exists bitacora;
+create table bitacora (nombreObra varchar(30), fecha date);
+
+# insercción de una obra se guarda en otra tabla 'bitacora', nombre de la obra y la fecha
+delimiter %%
+
+create trigger trigger_insert_obra AFTER INSERT ON obra 
+for each row begin
+declare nObra varchar(30);
+set nObra=NEW.obr_nombre_obra;
+insert into bitacora values (nObra, curdate());
+
+end;
+%%
+delimiter ;
+  
+  select * from obra;
+  insert into obra values (991, "boceto","El jardin",200,1006);
+  select * from bitacora;
