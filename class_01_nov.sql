@@ -1,3 +1,4 @@
+# Taller de triggers para el jueves
 use museo;
 drop procedure if exists TipoObra;
 DELIMITER $$
