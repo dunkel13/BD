@@ -1,13 +1,20 @@
+DROP DATABASE IF EXISTS tvistas;
+
+CREATE DATABASE tvistas;
+
+USE tvistas;
+
+-- 1.1 Crea la tabla venta e insertar un registro
 CREATE TABLE venta (cantidad INT, precio INT);   
 INSERT INTO venta VALUES(5, 500);   
 SELECT * FROM venta;
 
--- 1.2
+-- 1.2 Crea la vista v
 
  CREATE VIEW v AS SELECT cantidad, precio, cantidad*precio AS valor FROM venta;
  # La vista v creo un atributo llamado valor y le asigna el producto entre cantidad y precio 
   
--- 1.3
+-- 1.3 
   SELECT * FROM v;
 # Muestra la vista v con el nuevo atributo llamado valor
 
@@ -19,7 +26,7 @@ SELECT * FROM venta;
  SELECT * FROM v;
  #Insertar nuevos registros en la tabla venta que se visualizaron en la vista v porque esta volviendo a consultar la tabla original
  
- -- 2.1
+ -- 2.1 Crea la tabla venta2 e inserta un registro
  
  CREATE TABLE venta2 (cantidad INT, precio INT, valor INT); 
  INSERT INTO venta2 VALUES(4, 200, cantidad *precio);
@@ -67,6 +74,7 @@ CREATE VIEW view_autor1 AS SELECT nombre, apellido FROM autor;
 
 -- 4.4
 CREATE VIEW view_autor2 AS SELECT CONCAT(nombre, CONCAT(' ',apellido)) AS  nombre_completo FROM autor;
+select * from view_autor2;								
 #La vista view_autor2 aplica la funcion concat a los atributos nombre y apellido para mostrar en la vista un solo atributo llamado nombre_completo
 SHOW TABLES;
 describe view_autor1;
@@ -74,3 +82,15 @@ describe view_autor2;
 
 -- 4.5
 INSERT INTO view_autor1 (apellido, edad) VALUES ( 'Paez', 35);
+select * from view_autor1;
+select * from autor;
+
+-- 4.6
+INSERT INTO view_autor1 (nombre, apellido) VALUES ( 'Gloria', 'Perez');
+
+-- 5.1
+CREATE USER 'usuario1'@'localhost' IDENTIFIED BY '54321';
+-- 5.2
+grant select on view_autor1 to 'usuario1'@'localhost';
+-- 5.3
+revoke select on view_autor1 from 'usuario1'@'localhost';
