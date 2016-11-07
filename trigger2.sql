@@ -15,3 +15,32 @@ UPDATE DPE_subtotal SET DPE_subtotal=@var1*var2 WHERE
 END; &&
 
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS TR_2;
+DELIMITER &&
+
+CREATE TRIGGER TR_2 BEFORE INSERT ON `detalle pedido`
+FOR EACH ROW BEGIN
+
+SET @cant=(SELECT DPE_cantidad FROM `detalle pedido` JOIN MENU
+			WHERE PEDIDO_PED_id IN (
+					SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id = (
+						SELECT CLI_id FROM CLIENTE WHERE CLI_usuario ="Keane"))
+			AND MEN_id IN(SELECT MENU_MEN_id FROM `detalle pedido` WHERE CLIENTE_CLI_id=(SELECT CLI_id FROM CLIENTE WHERE CLI_usuario="Keane")));
+
+SET @price=(SELECT MEN_precio FROM MENU JOIN `detalle pedido`
+			WHERE MEN_id IN(
+					SELECT MENU_MEN_id FROM `detalle pedido` WHERE MENU_MEN_id IN(
+						SELECT MENU_MEN_id FROM `detalle pedido` WHERE PEDIDO_PED_id IN (SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id=(SELECT CLI_id FROM CLIENTE WHERE CLI_usuario="Keane"))))
+			AND PEDIDO_PED_id IN (
+					SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id = (
+						SELECT CLI_id FROM CLIENTE WHERE CLI_usuario ="Keane"));
+
+UPDATE DPE_subtotal SET DPE_subtotal = @cant * price	
+					WHERE PEDIDO_PED_id IN (
+							SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id = (
+								SELECT CLI_id FROM CLIENTE WHERE CLI_usuario ="Keane"))
+					AND MENU_MEN_id IN(SELECT MENU_MEN_id FROM `detalle pedido` WHERE PEDIDO_PED_id=(SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id=(SELECT CLI_id FROM CLIENTE WHERE CLI_usuario="Keane")));
+END; &&
+
+DELIMITER ;
