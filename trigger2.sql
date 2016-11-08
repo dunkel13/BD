@@ -1,3 +1,16 @@
+# trigger que despues de insertar un registro en  `detalle pedido` llama el PA 1 y asigna la salida de PA1 a la variable globlal @PT
+DROP TRIGGER IF EXISTS TR_1;
+DELIMITER &&
+
+CREATE TRIGGER TR_1 AFTER INSERT ON `detalle pedido`
+FOR EACH ROW BEGIN
+CALL PA_1(@pre_total);
+SET @PT=(SELECT @pre_total);
+UPDATE PAGO SET PAG_total=@PT WHERE PEDIDO_PED_id IN (SELECT PED_id FROM PEDIDO WHERE CLIENTE_CLI_id=(SELECT CLI_id FROM CLIENTE WHERE CLI_usuario="Keane")) ;
+END; &&
+
+DELIMITER ;
+
 INSERT INTO PEDIDO VALUES ('6-ped','HECHO','13-cli');
 INSERT INTO PAGO VALUES ('6-pag','APROBADO','2016/11/07  12:45:05',0,'6-ped');
 INSERT INTO `DETALLE PEDIDO` VALUES ('2016/11/07  13:00:05','6-ped','7567-men',2,34800,'null');
