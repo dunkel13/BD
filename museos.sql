@@ -1,4 +1,9 @@
-use sys;
+DROP DATABASE IF EXISTS museos;
+
+CREATE DATABASE museos;
+
+USE museos;
+
 CREATE TABLE EXPOSICION (
     exp_id_expo INT(10) NOT NULL PRIMARY KEY,
     exp_nombre_expo VARCHAR(30) NOT NULL
