@@ -72,11 +72,25 @@ CREATE TABLE historia(
 
 # tabla de la relacion muchos a muchos, tener cuidado con eso
 CREATE TABLE libro_has_autor(
-	AUTOR_AUT_id INT(10) PRIMARY KEY auto_increment,
-    LIBRO_lib_id INT(10) PRIMARY KEY auto_increment,
+	AUTOR_AUT_id INT(10),
+    LIBRO_lib_id INT(10),
     PRIMARY KEY (AUTOR_AUT_id, LIBRO_lib_id),
     FOREIGN KEY (AUTOR_AUT_id)
     REFERENCES Autor(AUT_id),
     FOREIGN KEY (LIBRO_lib_id)
     References libro(lib_id)
 );
+
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(1234,1);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(1345,2);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(1456,3);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(1678,4);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(1789,5);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(2345,6);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(2456,7);
+INSERT INTO libro_has_autor(AUTOR_AUT_id , LIBRO_lib_id) values(2567,8);
+
+SELECT * FROM nov08.autor;
+SELECT * FROM nov08.editorial;
+SELECT * FROM nov08.libro;
+SELECT * FROM nov08.libro_has_autor;
